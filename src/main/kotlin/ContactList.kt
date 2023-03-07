@@ -8,7 +8,10 @@ class ContactList {
     }
 
     fun load() {
-        var lines = File("./contacts.txt").readLines()
+        var lines = emptyList<String>()
+        try {
+            lines = File("./contacts.txt").readLines()
+        } catch (e: Exception) { return }
         var i = 0
         while (i < lines.count()) {
             var contact = Contact(lines[i], lines[i + 1])
@@ -105,7 +108,7 @@ class ContactList {
     }
 
     fun edit() {
-        print("Contact Id: ")
+        print("Id: ")
         var contact = contacts[readln().toInt()]
         println("Editing ${contact.name()}")
         println("What do you want to edit?")
@@ -125,19 +128,19 @@ class ContactList {
                 }
                 "3" -> {
                     contact.showNumbers()
-                    println("Commands: add, remove, cancel")
+                    println("1. Add, 2. Remove, 3. Cancel")
                     while (true) {
                         when (readln().lowercase().trim()) {
-                            "add" -> {
-                                print("Phone name: ")
-                                var name = readln()
+                            "1" -> {
                                 print("Number: ")
                                 var number = readln()
+                                print("Phone name: ")
+                                var name = readln()
                                 contact.addPhone(name, number)
                                 println("Number was added.")
                                 return
                             }
-                            "remove" -> {
+                            "2" -> {
                                 print("Phone name: ")
                                 var name = readln()
                                 if (contact.phoneNumbers.containsKey(name)) {
@@ -148,12 +151,13 @@ class ContactList {
                                 }
                                 return
                             }
+                            "3" -> return
                         }
                     }
                 }
                 "4" -> {
                     contact.showEmails()
-                    println("Commands: add, remove, cancel")
+                    println("1. Add, 2. Remove, 3. Cancel")
                     while (true) {
                         when (readln().lowercase().trim()) {
                             "add" -> {
