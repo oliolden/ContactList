@@ -15,14 +15,14 @@ class ContactList {
         var i = 0
         while (i < lines.count()) {
             var contact = Contact(lines[i], lines[i + 1])
-            if (lines[i + 2].contains('=')) {
+            if (lines.size >= i + 3 && lines[i + 2].contains('=')) {
                 var phones = lines[i + 2].split(",")
                 for (phone in phones) {
                     var data = phone.split("=")
                     contact.addPhone(data[0], data[1])
                 }
             }
-            if (lines[i + 3].contains('=')) {
+            if (lines.size >= i + 4 && lines[i + 3].contains('=')) {
                 var emails = lines[i + 3].split(",")
                 for (email in emails) {
                     var data = email.split("=")
